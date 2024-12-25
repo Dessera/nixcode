@@ -1,5 +1,5 @@
 {
-  description = "Project-based Vscodium template instances";
+  description = "Individual vscode instances for every workspace.";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
