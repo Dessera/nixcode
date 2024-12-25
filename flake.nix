@@ -11,6 +11,7 @@
     {
       nix-vscode-extensions,
       flake-parts,
+      nixpkgs,
       ...
     }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } (

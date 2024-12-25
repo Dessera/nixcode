@@ -9,7 +9,6 @@ in
 mkCode {
   inherit pkgs;
   settings = builtins.fromJSON (builtins.readFile ./settings.json);
-  isSettingsMutable = true;
   extensions =
     (with codeExtensions.vscode-marketplace; [
       jeff-hykin.better-nix-syntax
@@ -17,6 +16,9 @@ mkCode {
       github.copilot
       eamodio.gitlens
       mhutchie.git-graph
+      yzhang.markdown-all-in-one
+      equinusocio.vsc-material-theme-icons
+      equinusocio.vsc-material-theme
     ])
     ++ (with codeExtensions.open-vsx; [
       aaron-bond.better-comments
@@ -28,9 +30,5 @@ mkCode {
       gruntfuggly.todo-tree
       jeanp413.open-remote-ssh
       ms-ceintl.vscode-language-pack-zh-hans
-    ])
-    ++ (with pkgs.vscode-extensions; [
-      catppuccin.catppuccin-vsc
-      equinusocio.vsc-material-theme-icons
     ]);
 }

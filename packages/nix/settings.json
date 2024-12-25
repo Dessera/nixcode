@@ -33,7 +33,7 @@
   },
   "security.workspace.trust.untrustedFiles": "open",
   "window.menuBarVisibility": "toggle",
-  "workbench.colorTheme": "Catppuccin Mocha",
+  "workbench.colorTheme": "Material Theme Ocean",
   "workbench.commandPalette.experimental.suggestCommands": true,
   "workbench.iconTheme": "eq-material-theme-icons-ocean"
 }
