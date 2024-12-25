@@ -1,0 +1,39 @@
+{
+  "editor.cursorBlinking": "smooth",
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.cursorStyle": "block",
+  "editor.detectIndentation": true,
+  "editor.fontFamily": "MonaspiceNe Nerd Font Mono, JetBrainsMono Nerd Font Mono, '思源等宽', Source Han Mono, '思源黑体', '思源黑体 CN', monospace",
+  "editor.fontLigatures": "'calt', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'ss09', 'liga'",
+  "editor.fontSize": 20,
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.guides.bracketPairs": "active",
+  "editor.lineNumbers": "relative",
+  "editor.renderLineHighlight": "all",
+  "editor.renderWhitespace": "boundary",
+  "editor.rulers": [
+    80
+  ],
+  "editor.smoothScrolling": true,
+  "editor.tabCompletion": "on",
+  "editor.tabSize": 2,
+  "editor.wordWrap": "off",
+  "files.autoSave": "onFocusChange",
+  "nix.enableLanguageServer": true,
+  "nix.serverPath": "nixd",
+  "nix.serverSettings": {
+    "nixd": {
+      "formatting": {
+        "command": [
+          "nixfmt"
+        ]
+      }
+    }
+  },
+  "security.workspace.trust.untrustedFiles": "open",
+  "window.menuBarVisibility": "toggle",
+  "workbench.colorTheme": "Catppuccin Mocha",
+  "workbench.commandPalette.experimental.suggestCommands": true,
+  "workbench.iconTheme": "eq-material-theme-icons-ocean"
+}

@@ -1,0 +1,3 @@
+.direnv
+# vscodium caches
+.vscode/.user-data/*
