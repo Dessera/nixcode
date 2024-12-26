@@ -44,11 +44,20 @@ in
   inherit (derived) settings extensions;
 
   package = pkgs.callPackage (
-    { stdenv, makeDesktopItem }:
+    {
+      stdenv,
+      makeDesktopItem,
+      copyDesktopItems,
+    }:
     stdenv.mkDerivation {
       inherit name;
 
-      phases = [ "installPhase" ];
+      nativeBuildInputs = [ copyDesktopItems ];
+
+      phases = [
+        "buildPhase"
+        "installPhase"
+      ];
       installPhase = ''
         mkdir -p $out/bin
         cp ${innerPackage}/bin/${name} $out/bin/${name}
