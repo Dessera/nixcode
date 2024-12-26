@@ -57,7 +57,7 @@ Arguments:
   settings ? { },
   isSettingsMutable ? false,
   extensions ? [ ],
-  deriveFrom ? null,
+  deriveFrom ? [ ],
 }
 ```
 
