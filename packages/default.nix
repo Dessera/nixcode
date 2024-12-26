@@ -5,12 +5,31 @@ let
 in
 {
   perSystem =
-    { system, pkgs, ... }:
+    {
+      system,
+      pkgs,
+      ...
+    }:
     let
       codeExtensions = nix-vscode-extensions.extensions."${system}";
-      packageParams = { inherit nixcodeLib codeExtensions pkgs; };
+
+      originalPackages =
+        let
+          packageParams = {
+            inherit
+              nixcodeLib
+              codeExtensions
+              pkgs
+              originalPackages
+              ;
+          };
+        in
+        {
+          nix = import ./nix packageParams;
+          c_cpp = import ./c_cpp packageParams;
+        };
     in
     {
-      packages.nix = (import ./nix packageParams).package;
+      packages = builtins.mapAttrs (name: original: original.package) originalPackages;
     };
 }
