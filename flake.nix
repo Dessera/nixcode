@@ -26,7 +26,7 @@
         ];
         imports = [
           (importApply ./packages { inherit nix-vscode-extensions; })
-          ./lib
+          (importApply ./lib { inherit nixpkgs; })
           ./devshells.nix
         ];
       }

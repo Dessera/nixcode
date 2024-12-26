@@ -1,3 +1,4 @@
+nixcodeLib:
 {
   pkgs,
   name ? "nixcode",
@@ -5,35 +6,25 @@
   settings ? { },
   isSettingsMutable ? false,
   extensions ? [ ],
-  deriveFrom ? null,
+  deriveFrom ? [ ],
 }:
 let
-  inherit (pkgs) lib;
-
-  # merge deriveFrom.settings & settings (settings comes first)
-  derivedSettings =
-    if deriveFrom != null then lib.recursiveUpdate deriveFrom.settings settings else settings;
-  derivedExtensions =
-    if deriveFrom != null then
-      # no duplicates
-      lib.lists.unique (extensions ++ deriveFrom.extensions)
-    else
-      extensions;
+  derived = nixcodeLib.mkDerive {
+    inherit settings extensions deriveFrom;
+  };
 
   instance = pkgs.vscode-with-extensions.override {
     inherit vscode;
-    vscodeExtensions = derivedExtensions;
+    vscodeExtensions = derived.extensions;
   };
 
-  # write settings to a file (package)
-  settingsFile = pkgs.writeText "settings.json" (builtins.toJSON derivedSettings);
-  settingsFolder =
-    (lib.lists.last (lib.splitString "/" settingsFile.outPath))
-    + (if isSettingsMutable then "-mutable" else "");
-  userPath = "$HOME/.vscode-nix/${settingsFolder}";
+  settingsFile = pkgs.writeText "settings.json" (builtins.toJSON derived.settings);
+  userPath = nixcodeLib.mkUserData {
+    inherit settingsFile isSettingsMutable;
+  };
   settingsPath = "${userPath}/User/settings.json";
 
-  exeName = if vscode == pkgs.vscodium then "codium" else "code";
+  exeName = if (vscode == pkgs.vscodium || vscode == pkgs.vscodium-fhs) then "codium" else "code";
   settingsCmd =
     if isSettingsMutable then
       ''
@@ -51,9 +42,8 @@ let
 in
 {
   inherit name;
+  inherit (derived) settings extensions;
   unwrapped = instance;
-  settings = derivedSettings;
-  extensions = derivedExtensions;
 
   package = pkgs.writeShellScriptBin name ''
     if [ ! -d ${userPath}/User ]; then

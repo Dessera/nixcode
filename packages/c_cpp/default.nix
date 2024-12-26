@@ -25,5 +25,5 @@ mkCode {
     ++ (with pkgs.vscode-extensions; [
       vadimcn.vscode-lldb
     ]);
-  deriveFrom = originalPackages.nix;
+  deriveFrom = [ originalPackages.nix ];
 }
