@@ -2,6 +2,7 @@
   pkgs,
   name,
   vscode,
+  instance,
   userPath,
   settingsFile,
   isSettingsMutable,
@@ -31,5 +32,5 @@ pkgs.writeShellScriptBin name ''
     mkdir -p ${userPath}/User
   fi
   ${settingsCmd}
-  ${vscode}/bin/${exeName} --user-data-dir=${userPath} $@
+  ${instance}/bin/${exeName} --user-data-dir=${userPath} $@
 ''

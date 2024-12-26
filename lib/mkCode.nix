@@ -33,6 +33,7 @@ let
       pkgs
       name
       vscode
+      instance
       userPath
       settingsFile
       isSettingsMutable
@@ -54,13 +55,13 @@ in
 
       nativeBuildInputs = [ copyDesktopItems ];
 
-      phases = [
-        "buildPhase"
-        "installPhase"
-      ];
+      phases = [ "installPhase" ];
+
       installPhase = ''
         mkdir -p $out/bin
         cp ${innerPackage}/bin/${name} $out/bin/${name}
+
+        runHook postInstall
       '';
 
       desktopItems = [
