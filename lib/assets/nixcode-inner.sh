@@ -1,3 +1,5 @@
+#!PATH_TO_EXECUTOR
+
 if [ ! -d PATH_TO_USER_DATA/User ]; then
   mkdir -p PATH_TO_USER_DATA/User
 fi
