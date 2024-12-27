@@ -56,6 +56,9 @@ in
           "${instance}/bin/${instance.meta.mainProgram}"
         ];
       };
+      makeShellCommand = cmd: ''
+        ${pkgs.stdenv.shell} -c "${cmd}"
+      '';
     in
     stdenv.mkDerivation {
       inherit name;
@@ -75,7 +78,7 @@ in
           inherit name desktopName icon;
           comment = description;
           genericName = "Text Editor";
-          exec = "${name} %F";
+          exec = makeShellCommand "${name} %F";
           startupNotify = true;
           startupWMClass = name;
           categories = [
@@ -87,7 +90,7 @@ in
           keywords = [ "vscode" ];
           actions.new-empty-window = {
             name = "New Empty Window";
-            exec = "${name} --new-window %F";
+            exec = makeShellCommand "${name} --new-window %F";
             inherit icon;
           };
         })
@@ -97,7 +100,7 @@ in
           desktopName = desktopName + " - URL Handler";
           comment = description;
           genericName = "Text Editor";
-          exec = name + " --open-url %U";
+          exec = makeShellCommand "${name} --open-url %U";
           startupNotify = true;
           startupWMClass = name;
           categories = [
