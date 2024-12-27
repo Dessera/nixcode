@@ -12,9 +12,6 @@
 
       # Function to derive settings and extensions from parents
       mkDerive = import ./mkDerive.nix nixpkgs.lib;
-
-      # Function to make script (inner package)
-      mkScript = import ./mkScript.nix;
     };
   };
 }

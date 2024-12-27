@@ -1,15 +1,16 @@
 nixcodeLib:
 {
   pkgs,
-  name ? "nixcode",
-  desktopName ? "Nixcode",
-  description ? "Individual vscode instances for every workspace.",
-
   vscode ? pkgs.vscodium,
   settings ? { },
   isSettingsMutable ? false,
   extensions ? [ ],
   deriveFrom ? [ ],
+
+  name ? "nixcode",
+  desktopName ? "Nixcode",
+  description ? "Individual vscode instances for every workspace.",
+  icon ? vscode.pname,
 }:
 let
   derived = nixcodeLib.mkDerive {
@@ -25,20 +26,6 @@ let
   userPath = nixcodeLib.mkUserData {
     inherit settingsFile isSettingsMutable;
   };
-
-  exeName = if (vscode == pkgs.vscodium || vscode == pkgs.vscodium-fhs) then "codium" else "code";
-
-  innerPackage = nixcodeLib.mkScript {
-    inherit
-      pkgs
-      name
-      vscode
-      instance
-      userPath
-      settingsFile
-      isSettingsMutable
-      ;
-  };
 in
 {
   inherit name instance;
@@ -47,34 +34,50 @@ in
   package = pkgs.callPackage (
     {
       stdenv,
-      makeDesktopItem,
       copyDesktopItems,
+      makeDesktopItem,
+      substitute,
     }:
+    let
+      scriptBin = substitute {
+        src = ./assets/nixcode-inner.sh;
+        substitutions = [
+          "--replace-quiet"
+          "PATH_TO_USER_DATA"
+          userPath
+          "--replace-quiet"
+          "IS_SETTINGS_MUTABLE"
+          (if isSettingsMutable then "true" else "false")
+          "--replace-quiet"
+          "PATH_TO_SETTINGS"
+          settingsFile
+          "--replace-quiet"
+          "CODE_INSTANCE"
+          "${instance}/bin/${instance.meta.mainProgram}"
+        ];
+      };
+    in
     stdenv.mkDerivation {
       inherit name;
-
-      nativeBuildInputs = [ copyDesktopItems ];
-
-      phases = [ "installPhase" ];
+      dontUnpack = true;
 
       installPhase = ''
         mkdir -p $out/bin
-        cp ${innerPackage}/bin/${name} $out/bin/${name}
+        cp ${scriptBin} $out/bin/${name}
+        chmod +x $out/bin/${name}
 
         runHook postInstall
       '';
 
+      nativeBuildInputs = [ copyDesktopItems ];
       desktopItems = [
         (makeDesktopItem {
-          inherit name desktopName;
+          inherit name desktopName icon;
           comment = description;
           genericName = "Text Editor";
           exec = "${name} %F";
-
-          # TODO: modify icon
-          icon = "vs${exeName}";
           startupNotify = true;
-          startupWMClass = exeName;
+          startupWMClass = name;
           categories = [
             "Utility"
             "TextEditor"
@@ -85,8 +88,27 @@ in
           actions.new-empty-window = {
             name = "New Empty Window";
             exec = "${name} --new-window %F";
-            icon = "vs${exeName}";
+            inherit icon;
           };
+        })
+        (makeDesktopItem {
+          inherit icon;
+          name = name + "-url-handler";
+          desktopName = desktopName + " - URL Handler";
+          comment = description;
+          genericName = "Text Editor";
+          exec = name + " --open-url %U";
+          startupNotify = true;
+          startupWMClass = name;
+          categories = [
+            "Utility"
+            "TextEditor"
+            "Development"
+            "IDE"
+          ];
+          mimeTypes = [ "x-scheme-handler/${vscode.pname}" ];
+          keywords = [ "vscode" ];
+          noDisplay = true;
         })
       ];
     }
