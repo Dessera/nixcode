@@ -15,20 +15,53 @@
       ...
     }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } (
-      { flake-parts-lib, ... }:
-      let
-        inherit (flake-parts-lib) importApply;
-      in
+      { self, ... }:
       {
         systems = [
           "x86_64-linux"
           "x86_64-darwin"
         ];
         imports = [
-          (importApply ./packages { inherit nix-vscode-extensions; })
-          (importApply ./lib { inherit nixpkgs; })
-          ./devshells.nix
+          # ./devshells.nix
         ];
+
+        flake = {
+          lib = import ./lib { inherit nixpkgs; };
+        };
+
+        perSystem =
+          {
+            self',
+            system,
+            pkgs,
+            ...
+          }:
+          let
+            nixcodeLib = self.lib;
+            codeExtensions = nix-vscode-extensions.extensions."${system}";
+            packageParams = {
+              inherit
+                pkgs
+                nixcodeLib
+                codeExtensions
+                originalPackages
+                ;
+            };
+
+            originalPackages = import ./packages packageParams;
+          in
+          {
+            packages = builtins.mapAttrs (name: original: original.package) originalPackages;
+            legacyPackages = originalPackages;
+
+            devShells.default = pkgs.mkShell {
+              packages = with pkgs; [
+                nixd
+                nixfmt-rfc-style
+                self'.packages.nix
+              ];
+            };
+          };
       }
     );
 }
