@@ -8,7 +8,6 @@ let
   inherit (nixcodeLib) mkCode;
 in
 mkCode {
-  inherit pkgs;
   settings = builtins.fromJSON (builtins.readFile ./settings.json);
   extensions =
     (with codeExtensions.open-vsx; [

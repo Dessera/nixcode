@@ -11,7 +11,6 @@
     {
       nix-vscode-extensions,
       flake-parts,
-      nixpkgs,
       ...
     }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } (
@@ -21,24 +20,22 @@
           "x86_64-linux"
           "x86_64-darwin"
         ];
-        imports = [
-          # ./devshells.nix
-        ];
 
-        flake = {
-          lib = import ./lib { inherit nixpkgs; };
-        };
+        imports = [
+          ./lib
+        ];
 
         perSystem =
           {
             self',
-            system,
             pkgs,
+            system,
             ...
           }:
           let
-            nixcodeLib = self.lib;
+            nixcodeLib = self.lib.mkLib { inherit pkgs; };
             codeExtensions = nix-vscode-extensions.extensions."${system}";
+            originalPackages = import ./packages packageParams;
             packageParams = {
               inherit
                 pkgs
@@ -47,8 +44,6 @@
                 originalPackages
                 ;
             };
-
-            originalPackages = import ./packages packageParams;
           in
           {
             packages = builtins.mapAttrs (name: original: original.package) originalPackages;
