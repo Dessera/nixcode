@@ -15,7 +15,6 @@ nixLib.makeOverridable (
   { jdk, ... }@overrideParams:
   (mkCode {
     settings = builtins.fromJSON (builtins.readFile ./settings.json);
-    isSettingsMutable = true;
     extensions = with codeExtensions.open-vsx; [
       redhat.java
       vscjava.vscode-java-debug

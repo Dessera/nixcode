@@ -96,7 +96,12 @@
               };
 
               configDeployer = ''
-                mkdir -p ${userPath}/User
+                if [ ! -d ${userPath} ]; then
+                  mkdir -p ${userPath}/User
+                fi
+                if [ -e ${userPath}/User/settings.json ]; then
+                  rm -rf ${userPath}/User/settings.json
+                fi
                 ${if isSettingsMutable then "cp" else "ln -s"} ${settingsFile} ${userPath}/User/settings.json
               '';
 
