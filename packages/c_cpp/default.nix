@@ -3,6 +3,7 @@
   codeExtensions,
   pkgs,
   originalPackages,
+  ...
 }:
 let
   inherit (nixcodeLib) mkCode;

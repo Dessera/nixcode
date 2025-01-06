@@ -4,6 +4,7 @@
   originalPackages,
 
   pkgs,
+  ...
 }:
 let
   nixLib = pkgs.lib;

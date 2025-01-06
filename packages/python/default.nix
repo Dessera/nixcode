@@ -2,6 +2,7 @@
   nixcodeLib,
   codeExtensions,
   originalPackages,
+  ...
 }:
 let
   inherit (nixcodeLib) mkCode;
