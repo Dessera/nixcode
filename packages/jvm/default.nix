@@ -26,7 +26,6 @@ nixLib.makeOverridable (
     ];
     startupScripts = [
       ''
-        # create $PWD/.vscode/settings.json for correct java home
         mkdir -p $PWD/.vscode
         echo '{ "java.jdt.ls.java.home": "${jdk}/lib/openjdk" }' > $PWD/.vscode/settings.json
       ''
