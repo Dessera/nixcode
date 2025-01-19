@@ -5,5 +5,6 @@
     "editor.defaultFormatter": "charliermarsh.ruff"
   },
   "python.analysis.diagnosticMode": "workspace",
-  "python.languageServer": "None"
+  "python.locator": "native",
+  "python.languageServer": "Pylance"
 }
