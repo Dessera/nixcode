@@ -2,15 +2,12 @@
   nixcodeLib,
   codeExtensions,
   originalPackages,
-
-  pkgs,
   ...
 }:
 let
   inherit (nixcodeLib) mkCode;
 in
 mkCode {
-  inherit (pkgs) vscode;
   settings = builtins.fromJSON (builtins.readFile ./settings.json);
   extensions =
     (with codeExtensions.open-vsx; [
@@ -19,9 +16,9 @@ mkCode {
       kevinrose.vsc-python-indent
     ])
     ++ (with codeExtensions.vscode-marketplace; [
+      ms-pyright.pyright
       ms-python.python
       ms-python.debugpy
-      ms-python.vscode-pylance
     ]);
   deriveFrom = [ originalPackages.nix ];
 }

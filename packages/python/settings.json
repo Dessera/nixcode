@@ -6,5 +6,5 @@
   },
   "python.analysis.diagnosticMode": "workspace",
   "python.locator": "native",
-  "python.languageServer": "Pylance"
+  "python.languageServer": "None"
 }
