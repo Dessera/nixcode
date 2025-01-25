@@ -1,6 +1,8 @@
 {
   nixcodeLib,
   codeExtensions,
+
+  pkgs,
   ...
 }:
 let
@@ -28,7 +30,8 @@ mkCode {
       gruntfuggly.todo-tree
       jeanp413.open-remote-ssh
       ms-ceintl.vscode-language-pack-zh-hans
-    ]) ++ (with pkgs.vscode-extensions; [
+    ])
+    ++ (with pkgs.vscode-extensions; [
       github.copilot
       github.copilot-chat
     ]);
