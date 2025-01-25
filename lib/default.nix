@@ -9,7 +9,7 @@
           mkCode = nixLib.makeOverridable (
             {
               name ? "nixcode",
-              vscode ? pkgs.vscodium,
+              vscode ? pkgs.vscode,
               settings ? { },
               isSettingsMutable ? false,
               startupScripts ? [ ],

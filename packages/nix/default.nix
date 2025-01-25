@@ -12,7 +12,6 @@ mkCode {
     (with codeExtensions.vscode-marketplace; [
       jeff-hykin.better-nix-syntax
       igorsbitnev.error-gutters
-      github.copilot
       eamodio.gitlens
       mhutchie.git-graph
       yzhang.markdown-all-in-one
@@ -29,5 +28,8 @@ mkCode {
       gruntfuggly.todo-tree
       jeanp413.open-remote-ssh
       ms-ceintl.vscode-language-pack-zh-hans
+    ]) ++ (with pkgs.vscode-extensions; [
+      github.copilot
+      github.copilot-chat
     ]);
 }

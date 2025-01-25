@@ -14,11 +14,12 @@ mkCode {
       charliermarsh.ruff
       njpwerner.autodocstring
       kevinrose.vsc-python-indent
+      tamasfe.even-better-toml
+      ms-python.debugpy
     ])
     ++ (with codeExtensions.vscode-marketplace; [
-      ms-pyright.pyright
       ms-python.python
-      ms-python.debugpy
+      ms-python.vscode-pylance
     ]);
   deriveFrom = [ originalPackages.nix ];
 }

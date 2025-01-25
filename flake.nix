@@ -9,6 +9,7 @@
 
   outputs =
     {
+      nixpkgs,
       nix-vscode-extensions,
       flake-parts,
       ...
@@ -16,23 +17,24 @@
     flake-parts.lib.mkFlake { inherit inputs; } (
       { self, ... }:
       {
-        systems = [
-          "x86_64-linux"
-          "x86_64-darwin"
-        ];
+        systems = [ "x86_64-linux" ];
 
-        imports = [
-          ./lib
-        ];
+        imports = [ ./lib ];
 
         perSystem =
           {
             self',
-            pkgs,
             system,
             ...
           }:
           let
+            pkgs = import nixpkgs {
+              inherit system;
+              config = {
+                allowUnfree = true;
+              };
+            };
+
             nixcodeLib = self.lib.mkLib { inherit pkgs; };
             codeExtensions = nix-vscode-extensions.extensions."${system}";
             originalPackages = import ./packages packageParams;
