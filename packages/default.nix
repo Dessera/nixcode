@@ -4,4 +4,5 @@ packageParams: {
   python = import ./python packageParams;
   rust = import ./rust packageParams;
   jvm = import ./jvm packageParams;
+  web = import ./web packageParams;
 }
