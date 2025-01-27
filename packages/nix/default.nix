@@ -12,7 +12,6 @@ mkCode {
   settings = builtins.fromJSON (builtins.readFile ./settings.json);
   extensions =
     (with codeExtensions.vscode-marketplace; [
-      jeff-hykin.better-nix-syntax
       igorsbitnev.error-gutters
       eamodio.gitlens
       mhutchie.git-graph
@@ -25,7 +24,6 @@ mkCode {
       mkhl.direnv
       usernamehw.errorlens
       oderwat.indent-rainbow
-      jnoortheen.nix-ide
       christian-kohler.path-intellisense
       gruntfuggly.todo-tree
       jeanp413.open-remote-ssh
@@ -34,5 +32,8 @@ mkCode {
     ++ (with pkgs.vscode-extensions; [
       github.copilot
       github.copilot-chat
+
+      jeff-hykin.better-nix-syntax
+      jnoortheen.nix-ide
     ]);
 }
