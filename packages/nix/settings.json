@@ -35,5 +35,7 @@
   "window.menuBarVisibility": "toggle",
   "workbench.colorTheme": "Material Theme Ocean",
   "workbench.commandPalette.experimental.suggestCommands": true,
-  "workbench.iconTheme": "eq-material-theme-icons-ocean"
+  "workbench.iconTheme": "eq-material-theme-icons-ocean",
+  "Codegeex.Privacy": false,
+  "Codegeex.License": ""
 }

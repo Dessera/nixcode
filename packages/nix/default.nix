@@ -18,6 +18,7 @@ mkCode {
       yzhang.markdown-all-in-one
       equinusocio.vsc-material-theme-icons
       equinusocio.vsc-material-theme
+      aminer.codegeex
     ])
     ++ (with codeExtensions.open-vsx; [
       aaron-bond.better-comments
@@ -30,9 +31,6 @@ mkCode {
       ms-ceintl.vscode-language-pack-zh-hans
     ])
     ++ (with pkgs.vscode-extensions; [
-      github.copilot
-      github.copilot-chat
-
       jeff-hykin.better-nix-syntax
       jnoortheen.nix-ide
     ]);
