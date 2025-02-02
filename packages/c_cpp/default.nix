@@ -2,7 +2,7 @@
   nixcodeLib,
   codeExtensions,
   originalPackages,
-  
+
   pkgs,
   ...
 }:
@@ -12,7 +12,7 @@ in
 mkCode {
   settings = builtins.fromJSON (builtins.readFile ./settings.json);
   extensions =
-    (with codeExtensions.open-vsx; [
+    (with codeExtensions.vscode-marketplace; [
       jeff-hykin.better-cpp-syntax
       llvm-vs-code-extensions.vscode-clangd
       twxs.cmake

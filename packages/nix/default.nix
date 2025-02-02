@@ -19,15 +19,12 @@ mkCode {
       equinusocio.vsc-material-theme-icons
       equinusocio.vsc-material-theme
       aminer.codegeex
-    ])
-    ++ (with codeExtensions.open-vsx; [
       aaron-bond.better-comments
       mkhl.direnv
       usernamehw.errorlens
       oderwat.indent-rainbow
       christian-kohler.path-intellisense
       gruntfuggly.todo-tree
-      jeanp413.open-remote-ssh
       ms-ceintl.vscode-language-pack-zh-hans
     ])
     ++ (with pkgs.vscode-extensions; [

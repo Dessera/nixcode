@@ -11,9 +11,9 @@ in
 mkCode {
   settings = builtins.fromJSON (builtins.readFile ./settings.json);
   extensions =
-    (with codeExtensions.open-vsx; [
+    (with codeExtensions.vscode-marketplace; [
       rust-lang.rust-analyzer
-      lyonsyonii.rust-syntax
+      dustypomerleau.rust-syntax
       fill-labs.dependi
       tamasfe.even-better-toml
     ])
