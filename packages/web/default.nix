@@ -9,7 +9,7 @@ let
 in
 mkCode {
   settings = builtins.fromJSON (builtins.readFile ./settings.json);
-  extensions = with codeExtensions.open-vsx; [
+  extensions = with codeExtensions.vscode-marketplace; [
     vue.volar
     dbaeumer.vscode-eslint
     esbenp.prettier-vscode
