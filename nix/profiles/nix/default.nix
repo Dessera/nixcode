@@ -1,7 +1,7 @@
 {
   pkgs,
   ext,
-  lib,
+  nixcodeLib,
   ...
 }:
 {
@@ -28,7 +28,9 @@
       ms-ceintl.vscode-language-pack-zh-hans
     ]);
 
-  settings = builtins.fromJSON (builtins.readFile ./settings.json);
+  settings = nixcodeLib.priority-utils.mkDefault_1 (
+    builtins.fromJSON (builtins.readFile ./settings.json)
+  );
 
-  identifier = lib.mkDefault "nix";
+  identifier = nixcodeLib.priority-utils.mkDefault_1 "nix";
 }

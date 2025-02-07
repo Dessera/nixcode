@@ -13,6 +13,10 @@
             inherit pkgs nix-vscode-extensions;
             nixcodeLib = ret;
           };
+          priority-utils = import ./priority-utils.nix {
+            inherit pkgs nix-vscode-extensions;
+            nixcodeLib = ret;
+          };
         };
       in
       ret;

@@ -1,6 +1,7 @@
 {
   pkgs,
   nix-vscode-extensions,
+  nixcodeLib,
   ...
 }:
 let
@@ -16,7 +17,7 @@ in
     lib.evalModules {
       modules = [ ../modules ] ++ modules;
       specialArgs = {
-        inherit pkgs ext;
+        inherit pkgs ext nixcodeLib;
       } // extraSpecialArgs;
     };
 }

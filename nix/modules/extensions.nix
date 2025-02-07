@@ -12,8 +12,8 @@ in
 
   config = mkIf (cfg != [ ]) {
     settings = {
-      "extensions.autoCheckUpdates" = lib.mkDefault false;
-      "update.mode" = lib.mkDefault "none";
+      "extensions.autoCheckUpdates" = lib.mkOptionDefault false;
+      "update.mode" = lib.mkOptionDefault "none";
     };
   };
 }
