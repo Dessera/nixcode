@@ -15,42 +15,35 @@
       ...
     }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } (
-      { self, flake-parts-lib, ... }:
+      { flake-parts-lib, ... }:
       let
         inherit (flake-parts-lib) importApply;
       in
       {
         systems = [ "x86_64-linux" ];
 
-        imports = [ (importApply ./nix/lib { inherit nix-vscode-extensions; }) ];
+        imports = [
+          (importApply ./nix/lib { inherit nix-vscode-extensions; })
+          ./nix/legacy-packages.nix
+          ./nix/packages.nix
+        ];
 
         perSystem =
-          { system, ... }:
-          let
-            pkgs = import nixpkgs {
-              inherit system;
-              config = {
-                allowUnfree = true;
-              };
-            };
-
-            nixcodeLib = self.lib.mkLib pkgs;
-          in
+          { pkgs, system, ... }:
           {
-            packages.default = nixcodeLib.packages.mkNixcode {
-              modules = [ ./nix/profiles/nix ];
-            };
 
             devShells = {
               default = pkgs.mkShell {
-                packages = (
-                  with pkgs;
-                  [
-                    nixd
-                    nixfmt-rfc-style
-                  ]
-                );
+                packages = with pkgs; [
+                  nixd
+                  nixfmt-rfc-style
+                ];
               };
+            };
+
+            _module.args.pkgs = import nixpkgs {
+              inherit system;
+              config.allowUnfree = true;
             };
           };
       }
