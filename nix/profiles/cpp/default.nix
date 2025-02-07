@@ -1,18 +1,16 @@
 {
-  nixcodeLib,
-  codeExtensions,
-  originalPackages,
-
   pkgs,
+  ext,
+  nixcodeLib,
   ...
 }:
-let
-  inherit (nixcodeLib) mkCode;
-in
-mkCode {
-  settings = builtins.fromJSON (builtins.readFile ./settings.json);
+{
+  imports = [
+    ../nix
+  ];
+
   extensions =
-    (with codeExtensions.vscode-marketplace; [
+    (with ext.vscode-marketplace; [
       jeff-hykin.better-cpp-syntax
       llvm-vs-code-extensions.vscode-clangd
       twxs.cmake
@@ -26,5 +24,10 @@ mkCode {
     ++ (with pkgs.vscode-extensions; [
       vadimcn.vscode-lldb
     ]);
-  deriveFrom = [ originalPackages.nix ];
+
+  settings = nixcodeLib.priority-utils.mkDefault_2 (
+    builtins.fromJSON (builtins.readFile ./settings.json)
+  );
+
+  identifier = nixcodeLib.priority-utils.mkDefault_2 "cpp";
 }
