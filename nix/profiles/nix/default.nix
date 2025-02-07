@@ -4,6 +4,9 @@
   nixcodeLib,
   ...
 }:
+let
+  inherit (nixcodeLib) module-utils priority-utils;
+in
 {
   extensions =
     (with pkgs.vscode-extensions; [
@@ -28,9 +31,9 @@
       ms-ceintl.vscode-language-pack-zh-hans
     ]);
 
-  settings = nixcodeLib.priority-utils.mkDefault_1 (
-    builtins.fromJSON (builtins.readFile ./settings.json)
+  settings = priority-utils.mapAttrset priority-utils.mkDefault_1 (
+    module-utils.jsonFileToAttrs ./settings.json
   );
 
-  identifier = nixcodeLib.priority-utils.mkDefault_1 "nix";
+  identifier = priority-utils.mkDefault_1 "nix";
 }

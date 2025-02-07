@@ -4,6 +4,9 @@
   nixcodeLib,
   ...
 }:
+let
+  inherit (nixcodeLib) module-utils priority-utils;
+in
 {
   imports = [
     ../nix
@@ -25,9 +28,9 @@
       vadimcn.vscode-lldb
     ]);
 
-  settings = nixcodeLib.priority-utils.mkDefault_2 (
-    builtins.fromJSON (builtins.readFile ./settings.json)
+  settings = priority-utils.mapAttrset priority-utils.mkDefault_2 (
+    module-utils.jsonFileToAttrs ./settings.json
   );
 
-  identifier = nixcodeLib.priority-utils.mkDefault_2 "cpp";
+  identifier = priority-utils.mkDefault_2 "cpp";
 }

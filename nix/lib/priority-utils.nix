@@ -15,4 +15,6 @@ in
   mkDefault_6 = lib.mkOverride 500;
   mkDefault_7 = lib.mkOverride 400;
   mkDefault_8 = lib.mkOverride 300;
+
+  mapAttrset = f: lib.attrsets.mapAttrsRecursive (_: v: f v);
 }

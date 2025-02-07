@@ -24,8 +24,8 @@
 
         imports = [
           (importApply ./nix/lib { inherit nix-vscode-extensions; })
-          ./nix/legacy-packages.nix
           ./nix/packages.nix
+          ./nix/profiles
         ];
 
         perSystem =

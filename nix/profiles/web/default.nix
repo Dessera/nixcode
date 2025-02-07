@@ -1,4 +1,7 @@
 { ext, nixcodeLib, ... }:
+let
+  inherit (nixcodeLib) module-utils priority-utils;
+in
 {
   imports = [
     ../nix
@@ -13,9 +16,9 @@
     bradlc.vscode-tailwindcss
   ];
 
-  settings = nixcodeLib.priority-utils.mkDefault_2 (
-    builtins.fromJSON (builtins.readFile ./settings.json)
+  settings = priority-utils.mapAttrset priority-utils.mkDefault_2 (
+    module-utils.jsonFileToAttrs ./settings.json
   );
 
-  identifier = nixcodeLib.priority-utils.mkDefault_2 "web";
+  identifier = priority-utils.mkDefault_2 "web";
 }

@@ -17,6 +17,11 @@
             inherit pkgs nix-vscode-extensions;
             nixcodeLib = ret;
           };
+
+          module-utils = import ./module-utils.nix {
+            inherit pkgs nix-vscode-extensions;
+            nixcodeLib = ret;
+          };
         };
       in
       ret;
