@@ -9,14 +9,15 @@
     (with pkgs.vscode-extensions; [
       jeff-hykin.better-nix-syntax
       jnoortheen.nix-ide
+      smcpeak.default-keys-windows
+      equinusocio.vsc-material-theme-icons
+      equinusocio.vsc-material-theme
     ])
     ++ (with ext.vscode-marketplace; [
       igorsbitnev.error-gutters
       eamodio.gitlens
       mhutchie.git-graph
       yzhang.markdown-all-in-one
-      equinusocio.vsc-material-theme-icons
-      equinusocio.vsc-material-theme
       aminer.codegeex
       aaron-bond.better-comments
       mkhl.direnv

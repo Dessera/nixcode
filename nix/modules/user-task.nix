@@ -5,9 +5,9 @@ let
   json = pkgs.formats.json { };
 in
 {
-  options.settings = mkOption {
+  options.userTasks = mkOption {
     type = types.attrsOf json.type;
     default = { };
-    description = "Settings for the vscode.";
+    description = "User tasks";
   };
 }
