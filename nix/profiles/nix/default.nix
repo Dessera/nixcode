@@ -1,17 +1,16 @@
 {
-  nixcodeLib,
-  codeExtensions,
-
   pkgs,
+  ext,
+  lib,
   ...
 }:
-let
-  inherit (nixcodeLib) mkCode;
-in
-mkCode {
-  settings = builtins.fromJSON (builtins.readFile ./settings.json);
+{
   extensions =
-    (with codeExtensions.vscode-marketplace; [
+    (with pkgs.vscode-extensions; [
+      jeff-hykin.better-nix-syntax
+      jnoortheen.nix-ide
+    ])
+    ++ (with ext.vscode-marketplace; [
       igorsbitnev.error-gutters
       eamodio.gitlens
       mhutchie.git-graph
@@ -26,9 +25,9 @@ mkCode {
       christian-kohler.path-intellisense
       gruntfuggly.todo-tree
       ms-ceintl.vscode-language-pack-zh-hans
-    ])
-    ++ (with pkgs.vscode-extensions; [
-      jeff-hykin.better-nix-syntax
-      jnoortheen.nix-ide
     ]);
+
+  settings = builtins.fromJSON (builtins.readFile ./settings.json);
+
+  identifier = lib.mkDefault "nix";
 }

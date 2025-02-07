@@ -2,7 +2,7 @@
   description = "Individual vscode instances for every workspace.";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     flake-parts.url = "github:hercules-ci/flake-parts";
   };
@@ -10,23 +10,22 @@
   outputs =
     {
       nixpkgs,
-      nix-vscode-extensions,
       flake-parts,
+      nix-vscode-extensions,
       ...
     }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } (
-      { self, ... }:
+      { self, flake-parts-lib, ... }:
+      let
+        inherit (flake-parts-lib) importApply;
+      in
       {
         systems = [ "x86_64-linux" ];
 
-        imports = [ ./lib ];
+        imports = [ (importApply ./nix/lib { inherit nix-vscode-extensions; }) ];
 
         perSystem =
-          {
-            self',
-            system,
-            ...
-          }:
+          { system, ... }:
           let
             pkgs = import nixpkgs {
               inherit system;
@@ -35,28 +34,23 @@
               };
             };
 
-            nixcodeLib = self.lib.mkLib { inherit pkgs; };
-            codeExtensions = nix-vscode-extensions.extensions."${system}";
-            originalPackages = import ./packages packageParams;
-            packageParams = {
-              inherit
-                pkgs
-                nixcodeLib
-                codeExtensions
-                originalPackages
-                ;
-            };
+            nixcodeLib = self.lib.mkLib pkgs;
           in
           {
-            packages = builtins.mapAttrs (name: original: original.package) originalPackages;
-            legacyPackages = originalPackages;
+            packages.default = nixcodeLib.packages.mkNixcode {
+              modules = [ ./nix/profiles/nix ];
+            };
 
-            devShells.default = pkgs.mkShell {
-              packages = with pkgs; [
-                nixd
-                nixfmt-rfc-style
-                self'.packages.nix
-              ];
+            devShells = {
+              default = pkgs.mkShell {
+                packages = (
+                  with pkgs;
+                  [
+                    nixd
+                    nixfmt-rfc-style
+                  ]
+                );
+              };
             };
           };
       }

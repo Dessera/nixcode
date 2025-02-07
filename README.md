@@ -2,79 +2,53 @@
 
 Individual vscode instances for every workspace.
 
+## STATUS
+
+I'm working on refactoring the code to be more functional with a python startup script rather than a bash script.
+
+## Startup steps
+
+1. check user data directory
+   
+   - if not exist, create it
+   - link settings, keybindings, snippets, etc.
+
+2. check extensions
+   
+   - there is a list to point out which extensions to be mutable
+   - copy mutable extensions to extensions folder (if not exist)
+   - link immutable extensions to extensions folder (if not exist)
+   - pass extensions to vscode
+
+$HOME/.vscode-nix/extensions/<hash>-<pname>/    # extensions folder
+$HOME/.vscode-nix/global/<hash>-<pname>/        # user data folder (shared global storage)
+
 ## Usage
 
-Include the flake into your flake.nix and use mkCode to create your own code instance.
+code $@                       # just like normal vscode
+nixcode                       # a cli to manage nixcode profiles
 
-Here is an example of making a blank vscodium:
+mkCode {
+   modules = [
+      {
+         settings = { ... };
+         keybindings = { ... };
+         snippets = { ... };
+      }
+      ({ ext, pkgs, ... }: {
+         extensions = [ ... ];
+         initializer = [ ... ];
 
-```nix
-{
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    flake-parts.url = "github:hercules-ci/flake-parts";
-    nixcode.url = "github:Dessera/nixcode";
-  };
+         runtimeSettings = { ... }: { ... };    # package
+      })
+   ];
+} -> drv
 
-  outputs =
-    {
-      flake-parts,
-      nixcode,
-      ...
-    }@inputs:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [
-        "x86_64-linux"
-        "x86_64-darwin"
-      ];
+drv:
 
-      perSystem =
-        { pkgs, ... }:
-        {
-          packages.default = (nixcode.lib.mkCode {
-            inherit pkgs;
-            settings = { };
-            extensions = [ ];
-          }).package;
-        };
-    };
-}
-```
+runtimeSettingsArgs // fixedArgs => derivation;
 
-> For extensions, check `pkgs.vscode-extensions` or view [nix-vscode-extensions](https://github.com/nix-community/nix-vscode-extensions)
-
-## API
-
-### mkCode
-
-Arguments:
-
-```nix
-{
-  pkgs,
-  name ? "nixcode",
-  vscode ? pkgs.vscodium,
-  settings ? { },
-  isSettingsMutable ? false,
-  extensions ? [ ],
-  deriveFrom ? [ ],
-}
-```
-
-Return:
-
-```nix
-{
-  name = ...;         # executable name
-  unwrapped = ...;    # original executable
-  settings = ...;     # settings (nix object)
-  extensions = ...;   # extensions (nix packages)
-
-  package = ...;      # final package (shell script)
-}
-```
-
-### Notice
-
-1. all user data was saved in `$HOME/.vscode-nix/`
-2. Some extensions may not work well (especially theme extensions)
+instance (which is a drv)
+instance.overrideRuntimeSettingsArgs 
+or instance.override { runtimeSettingsArgs = { ... }; }
+or instance.overrideAttrs (old: { runtimeSettingsArgs = { ... }; })
