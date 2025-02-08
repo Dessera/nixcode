@@ -52,7 +52,7 @@ You can use `cachix` in `flake.nix` to avoid building the packages yourself.
 }
 ```
 
-### :recycling_symbol: Build your own profile :recycling_symbol:
+### :high_voltage: Build your own profile :high_voltage:
 
 1. Add this flake to your `flake.nix`
 2. Use `nixcode.lib.mkLib` to create a `nixcodeLib`
