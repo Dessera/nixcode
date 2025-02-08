@@ -8,11 +8,11 @@
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Dessera/nixcode)
 
 
-📦 Individual vscode instances for every workspace.
+:package: Individual vscode instances for every workspace.
 
-## Usage
+## :compass: Usage
 
-### Use prebuilt packages
+### :sparkles: Use prebuilt packages :sparkles:
 
 1. Add this flake to your `flake.nix`
 2. Use packages in `nixcode.packages.${system}`
@@ -52,7 +52,7 @@ You can use `cachix` in `flake.nix` to avoid building the packages yourself.
 }
 ```
 
-### Build your own profile
+### :recycling_symbol: Build your own profile :recycling_symbol:
 
 1. Add this flake to your `flake.nix`
 2. Use `nixcode.lib.mkLib` to create a `nixcodeLib`
@@ -93,13 +93,73 @@ You can use `cachix` in `flake.nix` to avoid building the packages yourself.
 }
 ```
 
-## API Reference
+## :hammer_and_wrench: API Reference
 
-TODO
+> :warning: Some functions are not documented here because they're used internally.
 
-## STATUS
+### Library reference
 
-Need documentation
+1. `packages.mkNixcode`: 
+   
+    create a `nixcode` package from modules.
 
+    ```nix
+    mkNixcode {
+      modules = [ 
+        # see: Module reference
+      ];
+    }
+    ```
 
+### Module reference
 
+```nix
+{ pkgs, ext, nixcodeLib, ... }:
+{
+  extensions = [ ];
+  settings = [ ];
+  keybindings = { };
+  snippets = {
+    global = { };
+    languageSpecific = { };
+  };
+  userTasks = { };
+
+  identifier = "...";
+  pname = "...";
+  package = pkgs.vscode;
+}
+```
+
+- `ext`: an extension set for vscode, see [nix-vscode-extensions](https://github.com/nix-community/nix-vscode-extensions).
+
+- `nixcodeLib`: nixcode library.
+
+- `identifier`: used to identify the package, final name will be `${pname}-${identifier}`.
+
+- `pname`: used to name the package, final name will be `${pname}-${identifier}`.
+
+- `package`: vscode package to use.
+
+- `extensions`: a list of extension packages to install.
+
+- `settings`: attrs written in `settings.json` file.
+
+- `keybindings`: attrs written in `keybindings.json` file.
+
+- `snippets.global`: snippets written in `snippets/global.code-snippets` file.
+
+- `snippets.languageSpecific`: snippets written in `snippets/${language}.json` file.
+
+  ```nix
+  # example
+  {
+    snippets.languageSpecific = {
+      nix = {
+        # ...
+      };
+    }
+  }
+  ```
+
+- `userTasks` : user tasks written in `tasks.json` file.
