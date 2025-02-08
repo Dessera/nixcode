@@ -1,9 +1,9 @@
-name: "Cachix"
+name: "cache nixcode"
 on:
   push:
     branches: [master]
 jobs:
-  cachix:
+  cache:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -16,10 +16,9 @@ jobs:
       with:
         name: nixcode
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-    - run: nix build .#nixcode-cpp --json | jq -r '.[].outputs | to_entries[].value'
-    - run: nix build .#nixcode-jvm --json | jq -r '.[].outputs | to_entries[].value'
-    - run: nix build .#nixcode-nix --json | jq -r '.[].outputs | to_entries[].value'
-    - run: nix build .#nixcode-python --json | jq -r '.[].outputs | to_entries[].value'
-    - run: nix build .#nixcode-rust --json | jq -r '.[].outputs | to_entries[].value'
-    - run: nix build .#nixcode-web --json | jq -r '.[].outputs | to_entries[].value'
-    - run: nix-shell --run "echo OK"
+    - run: nix build .#nixcode-cpp
+    - run: nix build .#nixcode-jvm
+    - run: nix build .#nixcode-nix
+    - run: nix build .#nixcode-python
+    - run: nix build .#nixcode-rust
+    - run: nix build .#nixcode-web
