@@ -13,9 +13,6 @@
     "-j=12",
     "--experimental-modules-support"
   ],
-  "[cpp]": {
-    "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
-  },
   "cmake.options.statusBarVisibility": "compact",
   "cmake.configureOnOpen": true,
   "cmake.pinnedCommands": [
@@ -25,6 +22,9 @@
   "makefile.configureOnOpen": true,
   "mesonbuild.downloadLanguageServer": false,
   "mesonbuild.languageServerPath": "mesonlsp",
+  "[cpp]": {
+    "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+  },
   "files.associations": {
     ".clangd": "yaml",
     ".clang-format": "yaml"

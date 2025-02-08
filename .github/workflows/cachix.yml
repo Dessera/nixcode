@@ -13,14 +13,13 @@ jobs:
       with:
         nix_path: nixpkgs=channel:nixos-unstable
         github_access_token: ${{ secrets.GITHUB_TOKEN }}
-    - uses: dcarbone/install-jq-action@v3
     - uses: cachix/cachix-action@v14
       with:
         name: nixcode
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-    - run: nix build .#nixcode-cpp --json | jq -r '.[].outputs | to_entries[].value'
-    - run: nix build .#nixcode-jvm --json | jq -r '.[].outputs | to_entries[].value'
-    - run: nix build .#nixcode-nix --json | jq -r '.[].outputs | to_entries[].value'
-    - run: nix build .#nixcode-python --json | jq -r '.[].outputs | to_entries[].value'
-    - run: nix build .#nixcode-rust --json | jq -r '.[].outputs | to_entries[].value'
-    - run: nix build .#nixcode-web --json | jq -r '.[].outputs | to_entries[].value'
+    - run: nix build .#nixcode-cpp
+    - run: nix build .#nixcode-jvm
+    - run: nix build .#nixcode-nix
+    - run: nix build .#nixcode-python
+    - run: nix build .#nixcode-rust
+    - run: nix build .#nixcode-web
