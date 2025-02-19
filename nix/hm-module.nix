@@ -39,7 +39,7 @@
                 inherit nixcodeLib ext;
                 pkgs = finalPkgs;
               };
-              modules = nixcodeType;
+              modules = [ nixcodeType ];
             }
           );
           default = [ ];
