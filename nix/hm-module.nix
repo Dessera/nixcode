@@ -1,10 +1,11 @@
+{ nixpkgs, nix-vscode-extensions }:
 { self, ... }:
 {
   flake.hmModule =
     {
       config,
-      pkgs,
       lib,
+      pkgs,
       ...
     }:
     let
@@ -15,16 +16,32 @@
         types
         ;
 
+      finalPkgs = import nixpkgs {
+        inherit (pkgs) system;
+        config.allowUnfree = true;
+      };
+
       cfg = config.modules.packages.nixcode;
 
       nixcodeType = import ./modules;
-      nixcodeLib = self.lib.mkLib pkgs;
+      nixcodeLib = self.lib.mkLib finalPkgs;
+      ext = nix-vscode-extensions.extensions.${pkgs.system};
     in
     {
       options.modules.packages.nixcode = {
         enable = mkEnableOption "Enable nixcode";
         modules = mkOption {
-          type = types.listOf (types.submodule nixcodeType);
+          type = types.listOf (
+            types.submoduleWith {
+              description = "Nixcode build module";
+              class = "nixcode";
+              specialArgs = {
+                inherit nixcodeLib ext;
+                pkgs = finalPkgs;
+              };
+              modules = nixcodeType;
+            }
+          );
           default = [ ];
           description = "List of nixcode modules to enable";
         };

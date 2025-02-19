@@ -24,8 +24,8 @@
 
         imports = [
           (importApply ./nix/lib { inherit nix-vscode-extensions; })
+          (importApply ./nix/hm-module.nix { inherit nixpkgs nix-vscode-extensions; })
           ./nix/packages.nix
-          ./nix/hm-module.nix
           ./nix/profiles
         ];
 
