@@ -16,14 +16,13 @@
         types
         ;
 
+      cfg = config.modules.packages.nixcode;
+
       finalPkgs = import nixpkgs {
         inherit (pkgs) system;
         config.allowUnfree = true;
       };
 
-      cfg = config.modules.packages.nixcode;
-
-      nixcodeType = import ./modules;
       nixcodeLib = self.lib.mkLib finalPkgs;
       ext = nix-vscode-extensions.extensions.${pkgs.system};
     in
@@ -39,7 +38,7 @@
                 inherit nixcodeLib ext;
                 pkgs = finalPkgs;
               };
-              modules = [ nixcodeType ];
+              modules = [ ./modules ];
             }
           );
           default = [ ];

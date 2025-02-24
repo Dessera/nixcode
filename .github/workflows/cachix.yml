@@ -17,6 +17,8 @@ jobs:
       with:
         name: nixcode
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+        # only push items containing `nixcode` (reg expression) => string not containing `nixcode`
+        pushFilter: '^((?!nixcode).)*$'
     - run: nix build .#nixcode-cpp
     - run: nix build .#nixcode-jvm
     - run: nix build .#nixcode-nix
