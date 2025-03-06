@@ -6,7 +6,7 @@
 }:
 let
   inherit (pkgs) lib system;
-  ext = nix-vscode-extensions.extensions."${system}";
+  ext = nix-vscode-extensions.overlays.default pkgs pkgs;
 in
 {
   evalCode =
