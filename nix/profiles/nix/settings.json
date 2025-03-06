@@ -33,7 +33,7 @@
   },
   "security.workspace.trust.untrustedFiles": "open",
   "window.menuBarVisibility": "toggle",
-  "workbench.colorTheme": "Tinacious Design (High Contrast)",
+  "workbench.colorTheme": "Noctis Uva",
   "workbench.commandPalette.experimental.suggestCommands": true,
   "workbench.iconTheme": "vscode-icons",
   "workbench.productIconTheme": "fluent-icons",

@@ -30,15 +30,15 @@
         ];
 
         perSystem =
-          { pkgs, system, ... }:
+          { pkgs, system, self', ... }:
           {
 
             devShells = {
               default = pkgs.mkShell {
-                packages = with pkgs; [
+                packages = (with pkgs; [
                   nixd
                   nixfmt-rfc-style
-                ];
+                ]) ++ [ self'.packages.nixcode-nix ];
               };
             };
 

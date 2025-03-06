@@ -31,6 +31,7 @@ in
       vscode-icons-team.vscode-icons
       tinaciousdesign.theme-tinaciousdesign
       davidanson.vscode-markdownlint
+      liviuschera.noctis
     ]);
 
   settings = priority-utils.mapAttrset priority-utils.mkDefault_1 (
