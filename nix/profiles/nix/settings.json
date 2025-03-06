@@ -33,9 +33,14 @@
   },
   "security.workspace.trust.untrustedFiles": "open",
   "window.menuBarVisibility": "toggle",
-  "workbench.colorTheme": "Material Theme Ocean",
+  "workbench.colorTheme": "Tinacious Design (High Contrast)",
   "workbench.commandPalette.experimental.suggestCommands": true,
-  "workbench.iconTheme": "eq-material-theme-icons-ocean",
+  "workbench.iconTheme": "vscode-icons",
+  "workbench.productIconTheme": "fluent-icons",
   "Codegeex.Privacy": false,
-  "Codegeex.License": ""
+  "Codegeex.License": "",
+  "[markdown]": {
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+  },
+  "vsicons.dontShowNewVersionMessage": true
 }

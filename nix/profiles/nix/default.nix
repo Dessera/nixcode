@@ -13,13 +13,11 @@ in
       jeff-hykin.better-nix-syntax
       jnoortheen.nix-ide
       smcpeak.default-keys-windows
-      equinusocio.vsc-material-theme-icons
-      equinusocio.vsc-material-theme
     ])
     ++ (with ext.vscode-marketplace; [
       igorsbitnev.error-gutters
       eamodio.gitlens
-      mhutchie.git-graph
+      # mhutchie.git-graph
       yzhang.markdown-all-in-one
       aminer.codegeex
       aaron-bond.better-comments
@@ -29,6 +27,10 @@ in
       christian-kohler.path-intellisense
       gruntfuggly.todo-tree
       ms-ceintl.vscode-language-pack-zh-hans
+      miguelsolorio.fluent-icons
+      vscode-icons-team.vscode-icons
+      tinaciousdesign.theme-tinaciousdesign
+      davidanson.vscode-markdownlint
     ]);
 
   settings = priority-utils.mapAttrset priority-utils.mkDefault_1 (

@@ -7,7 +7,6 @@
 ![Maintainer](https://img.shields.io/badge/maintainer-Dessera-red)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Dessera/nixcode)
 
-
 :package: Individual vscode instances for every workspace.
 
 ## :compass: Usage
@@ -99,8 +98,8 @@ You can use `cachix` in `flake.nix` to avoid building the packages yourself.
 
 ### Library reference
 
-1. `packages.mkNixcode`: 
-   
+1. `packages.mkNixcode`:
+
     create a `nixcode` package from modules.
 
     ```nix
