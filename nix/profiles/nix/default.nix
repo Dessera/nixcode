@@ -29,9 +29,8 @@ in
       ms-ceintl.vscode-language-pack-zh-hans
       miguelsolorio.fluent-icons
       vscode-icons-team.vscode-icons
-      tinaciousdesign.theme-tinaciousdesign
       davidanson.vscode-markdownlint
-      liviuschera.noctis
+      zhuangtongfa.material-theme
     ]);
 
   settings = priority-utils.mapAttrset priority-utils.mkDefault_1 (
