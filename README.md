@@ -9,6 +9,10 @@
 
 :package: Individual vscode instances for every workspace.
 
+## Project status
+
+This project will no longer be maintained as the home manager already supports vscode profiles.
+
 ## :compass: Usage
 
 ### :sparkles: Use prebuilt packages :sparkles:
